@@ -1,1 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的崩鐵角色</title>
+  <style>
+    body {
+      font-family: "微軟正黑體", sans-serif;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 30px;
+    }
 
+    h1 {
+      color: #f1f1f1;
+    }
+
+    .character-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background-color: #1a1a1a;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(255,255,255,0.1);
+      width: 500px;
+      padding: 20px;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .name {
+      margin-top: 10px;
+      font-size: 20px;
+      color: #f8f8f8;
+    }
+
+    .role {
+      font-size: 16px;
+      color: #cccccc;
+    }
+
+    .version {
+      font-size: 20px;
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>我的崩鐵角色收藏</h1>
+
+  <div class="character-grid">
+
+    <div class="card">
+      <div class="version">3.3</div>
+      <a href="https://www.google.com/search?q=風堇 崩鐵" target="_blank">
+        <img src="https://i.imgur.com/ZUbb7hE.jpeg" alt="風堇">
+      </a>
+      <div class="name">風堇</div>
+      <div class="role">記憶・風屬性</div>
+    </div>
+
+    <div class="card">
+      <div class="version">3.2</div>
+      <a href="https://www.google.com/search?q=那刻夏 崩鐵" target="_blank">
+        <img src="https://i.imgur.com/A4zDgAm.jpeg" alt="那刻夏">
+      </a>
+      <div class="name">那刻夏</div>
+      <div class="role">智識・風屬性</div>
+    </div>
+
+    <div class="card">
+      <div class="version">3.2</div>
+      <a href="https://www.google.com/search?q=遐蝶 崩鐵" target="_blank">
+        <img src="https://upload-os-bbs.hoyolab.com/upload/2025/02/11/304682478/33c6b492b347b92cff2ac9940a3feb91_4744307413417807091.webp" alt="遐蝶">
+      </a>
+      <div class="name">遐蝶</div>
+      <div class="role">記憶・量子屬性</div>
+    </div>
+
+    <div class="card">
+      <div class="version">3.1</div>
+      <a href="https://www.google.com/search?q=緹寶 崩鐵" target="_blank">
+        <img src="https://i.imgur.com/GvPULuD.jpeg" alt="緹寶">
+      </a>
+      <div class="name">緹寶</div>
+      <div class="role">同諧・量子屬性</div>
+    </div>
+
+    <div class="card">
+      <div class="version">3.0</div>
+      <a href="https://www.google.com/search?q=阿格萊雅 崩鐵" target="_blank">
+        <img src="https://truth.bahamut.com.tw/s01/202411/forum/72822/deaaeacda051f3af12e508cb40bdb778.JPG" alt="阿格萊雅">
+      </a>
+      <div class="name">阿格萊雅</div>
+      <div class="role">記憶・雷屬性</div>
+    </div>
+
+    <div class="card">
+      <div class="version">3.0</div>
+      <a href="https://www.google.com/search?q=大黑塔 崩鐵" target="_blank">
+        <img src="https://olimg.3dmgame.com/uploads/images/raiders/2024/1119/1731994053726.png" alt="大黑塔">
+      </a>
+      <div class="name">大黑塔</div>
+      <div class="role">智識・冰屬性</div>
+    </div>
+
+    <div class="card">
+      <div class="version">2.3</div>
+      <a href="https://www.google.com/search?q=流螢 崩鐵" target="_blank">
+        <img src="https://i.imgur.com/SNeZuP5.jpeg" alt="流螢">
+      </a>
+      <div class="name">流螢</div>
+      <div class="role">毀滅・火屬性</div>
+    </div>
+
+    <div class="card">
+      <div class="version">2.0</div>
+      <a href="https://www.google.com/search?q=花火 崩鐵" target="_blank">
+        <img src="https://upload-os-bbs.hoyolab.com/upload/2023/12/14/5f6d49a8f1187d91f7e00f89b9df4586_3381265488830368937.jpg" alt="花火">
+      </a>
+      <div class="name">花火</div>
+      <div class="role">同諧・量子屬性</div>
+    </div>
+
+    <div class="card">
+      <div class="version">1.6</div>
+      <a href="https://www.google.com/search?q=阮梅 崩鐵" target="_blank">
+        <img src="https://upload-os-bbs.hoyolab.com/upload/2023/10/31/5300994eb0e12869ec3dc148133f5152_8226399514371573795.jpg" alt="阮梅">
+      </a>
+      <div class="name">阮梅</div>
+      <div class="role">同諧・冰屬性</div>
+    </div>
+
+    <div class="card">
+      <div class="version">1.4</div>
+      <a href="https://www.google.com/search?q=鏡流 崩鐵" target="_blank">
+        <img src="https://patchwiki.biligame.com/images/sr/b/b9/b1v5kx6pyxkq288telfdwdik5qiyw64.png" alt="鏡流">
+      </a>
+      <div class="name">鏡流</div>
+      <div class="role">毀滅・冰屬性</div>
+    </div>
+
+    <div class="card">
+      <div class="version">1.3</div>
+      <a href="https://www.google.com/search?q=符玄 崩鐵" target="_blank">
+        <img src="https://truth.bahamut.com.tw/s01/202307/da397b27cfa28e8e33beb6c636a3d952.JPG" alt="符玄">
+      </a>
+      <div class="name">符玄</div>
+      <div class="role">存護・量子屬性</div>
+    </div>
+
+    <div class="card">
+      <div class="version">1.0</div>
+      <a href="https://www.google.com/search?q=希兒 崩鐵" target="_blank">
+        <img src="https://patchwiki.biligame.com/images/sr/9/92/jxsxrkyhkjyoyp39gvjw8b6i98u4gam.jpg" alt="希兒">
+      </a>
+      <div class="name">希兒</div>
+      <div class="role">巡獵・量子屬性</div>
+    </div>
+
+  </div>
+</body>
+</html>
