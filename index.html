@@ -2,6 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>崩壞:星穹鐵道</title>
   <style>
     body {
@@ -12,18 +13,21 @@
       background-position: center;
       height: 100vh;
       position: relative;
+      font-family: sans-serif;
+    }
+
+    .button-container, .bg-button-container {
+      position: absolute;
+      bottom: 5%;
+      transform: translateX(-50%);
     }
 
     .button-container {
-      position: absolute;
-      bottom: 5%;
-      right: 47.5%;
+      left: 50%;
     }
 
     .bg-button-container {
-      position: absolute;
-      bottom: 5%;
-      right: 2%;
+      left: 20%;
     }
 
     .btn {
@@ -31,7 +35,7 @@
       color: #696969;
       border: none;
       padding: 12px 24px;
-      font-size: 30px;
+      font-size: 20px;
       border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.3s;
@@ -40,6 +44,13 @@
 
     .btn:hover {
       background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    @media (max-width: 600px) {
+      .btn {
+        font-size: 16px;
+        padding: 10px 20px;
+      }
     }
   </style>
 </head>
