@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>我的崩鐵角色</title>
   <style>
     body {
       font-family: "微軟正黑體", sans-serif;
       background-color: #87D1F0;
-      color: #000000;
+      color: #000;
       text-align: center;
       padding: 30px;
     }
-
     h1 {
-      color: #f1f1f1;
+      color: #222;
     }
-
     .character-grid {
       display: flex;
       flex-wrap: wrap;
@@ -24,20 +22,17 @@
       gap: 20px;
       margin-top: 40px;
     }
-
     .card {
       background-color: #696969;
       border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(255,255,255,0.1);
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
       width: 450px;
       padding: 20px;
       transition: transform 0.3s;
     }
-
     .card:hover {
       transform: scale(1.05);
     }
-
     .card img {
       width: 100%;
       height: 400px;
@@ -45,25 +40,21 @@
       border-radius: 10px;
       cursor: pointer;
     }
-
     .name {
       margin-top: 10px;
       font-size: 20px;
       color: #f8f8f8;
     }
-
     .role {
       font-size: 16px;
       color: #cccccc;
     }
-
     .version {
       font-size: 20px;
       color: #fff;
       margin-bottom: 10px;
       font-weight: bold;
     }
-
     .back-button {
       margin-bottom: 20px;
       padding: 10px 20px;
@@ -75,18 +66,37 @@
       border-radius: 8px;
       cursor: pointer;
     }
+    @media (max-width: 600px) {
+      .card {
+        width: 90%;
+        padding: 10px;
+      }
+      .card img {
+        height: auto;
+      }
+      .name,
+      .role,
+      .version {
+        font-size: 16px;
+      }
+      .back-button {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+    }
   </style>
 </head>
 <body>
-  
-  <button onclick="history.back()" class="back-button">返回</button>
+  <button onclick="history.back()" class="back-button">← 返回首頁</button>
 
   <div class="character-grid">
-
     <div class="card">
       <div class="version">3.3</div>
       <a href="https://wiki.hoyolab.com/pc/hsr/entry/3688" target="_blank">
-        <img src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2025/05/20/125413385/d903fd70e29935794861a9c1ff948fb2_3057586705909648752.png?x-oss-process=image%2Fformat%2Cwebp" alt="風堇">
+        <img
+          src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2025/05/20/125413385/d903fd70e29935794861a9c1ff948fb2_3057586705909648752.png?x-oss-process=image%2Fformat%2Cwebp"
+          alt="風堇"
+        />
       </a>
       <div class="name">風堇</div>
       <div class="role">記憶・風屬性</div>
@@ -95,7 +105,10 @@
     <div class="card">
       <div class="version">3.2</div>
       <a href="https://wiki.hoyolab.com/pc/hsr/entry/3561" target="_blank">
-        <img src="https://act-webstatic.hoyoverse.com/event-static-hoyowiki-admin/2025/04/18/fdc0e54ac622aced8e45e849be8251a6_3788397986337660591.png?x-oss-process=image%2Fformat%2Cwebp" alt="那刻夏">
+        <img
+          src="https://act-webstatic.hoyoverse.com/event-static-hoyowiki-admin/2025/04/18/fdc0e54ac622aced8e45e849be8251a6_3788397986337660591.png?x-oss-process=image%2Fformat%2Cwebp"
+          alt="那刻夏"
+        />
       </a>
       <div class="name">那刻夏</div>
       <div class="role">智識・風屬性</div>
@@ -104,7 +117,10 @@
     <div class="card">
       <div class="version">3.2</div>
       <a href="https://wiki.hoyolab.com/pc/hsr/entry/3560" target="_blank">
-        <img src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2025/04/09/6668036/0a9e060af725abf5f29a7c49165b2a65_8467502334238094153.png?x-oss-process=image%2Fformat%2Cwebp" alt="遐蝶">
+        <img
+          src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2025/04/09/6668036/0a9e060af725abf5f29a7c49165b2a65_8467502334238094153.png?x-oss-process=image%2Fformat%2Cwebp"
+          alt="遐蝶"
+        />
       </a>
       <div class="name">遐蝶</div>
       <div class="role">記憶・量子屬性</div>
@@ -113,7 +129,10 @@
     <div class="card">
       <div class="version">3.1</div>
       <a href="https://wiki.hoyolab.com/pc/hsr/entry/3322" target="_blank">
-        <img src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2025/02/26/125413385/a49393503b83228dbb1d3cb7344be853_6171119723656046174.png?x-oss-process=image%2Fformat%2Cwebp" alt="緹寶">
+        <img
+          src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2025/02/26/125413385/a49393503b83228dbb1d3cb7344be853_6171119723656046174.png?x-oss-process=image%2Fformat%2Cwebp"
+          alt="緹寶"
+        />
       </a>
       <div class="name">緹寶</div>
       <div class="role">同諧・量子屬性</div>
@@ -122,7 +141,10 @@
     <div class="card">
       <div class="version">3.0</div>
       <a href="https://wiki.hoyolab.com/pc/hsr/entry/3286" target="_blank">
-        <img src="https://act-webstatic.hoyoverse.com/event-static-hoyowiki-admin/2025/01/23/d8a7ab6d1dfb573a41335e6eaf8a18f1_4231763977332765706.png?x-oss-process=image%2Fformat%2Cwebp" alt="阿格萊雅">
+        <img
+          src="https://act-webstatic.hoyoverse.com/event-static-hoyowiki-admin/2025/01/23/d8a7ab6d1dfb573a41335e6eaf8a18f1_4231763977332765706.png?x-oss-process=image%2Fformat%2Cwebp"
+          alt="阿格萊雅"
+        />
       </a>
       <div class="name">阿格萊雅</div>
       <div class="role">記憶・雷屬性</div>
@@ -131,7 +153,10 @@
     <div class="card">
       <div class="version">3.0</div>
       <a href="https://wiki.hoyolab.com/pc/hsr/entry/3285" target="_blank">
-        <img src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2025/01/14/125413385/a927a54edbd7ca15867ff99432234c75_161589862674592666.png?x-oss-process=image%2Fformat%2Cwebp" alt="大黑塔">
+        <img
+          src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2025/01/14/125413385/a927a54edbd7ca15867ff99432234c75_161589862674592666.png?x-oss-process=image%2Fformat%2Cwebp"
+          alt="大黑塔"
+        />
       </a>
       <div class="name">大黑塔</div>
       <div class="role">智識・冰屬性</div>
@@ -140,7 +165,10 @@
     <div class="card">
       <div class="version">2.3</div>
       <a href="https://wiki.hoyolab.com/pc/hsr/entry/2494" target="_blank">
-        <img src="https://act-webstatic.hoyoverse.com/event-static-hoyowiki-admin/2024/06/11/f37341d7ff48ce8cb980a2b446b53dd9_6656818265596211275.png?x-oss-process=image%2Fformat%2Cwebp" alt="流螢">
+        <img
+          src="https://act-webstatic.hoyoverse.com/event-static-hoyowiki-admin/2024/06/11/f37341d7ff48ce8cb980a2b446b53dd9_6656818265596211275.png?x-oss-process=image%2Fformat%2Cwebp"
+          alt="流螢"
+        />
       </a>
       <div class="name">流螢</div>
       <div class="role">毀滅・火屬性</div>
@@ -149,7 +177,10 @@
     <div class="card">
       <div class="version">2.0</div>
       <a href="https://wiki.hoyolab.com/pc/hsr/entry/1807" target="_blank">
-        <img src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2024/02/27/125413385/494b80524df2fa50afb6e02147cc7b51_4507194550195905061.png?x-oss-process=image%2Fformat%2Cwebp" alt="花火">
+        <img
+          src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2024/02/27/125413385/494b80524df2fa50afb6e02147cc7b51_4507194550195905061.png?x-oss-process=image%2Fformat%2Cwebp"
+          alt="花火"
+        />
       </a>
       <div class="name">花火</div>
       <div class="role">同諧・量子屬性</div>
@@ -158,7 +189,10 @@
     <div class="card">
       <div class="version">1.6</div>
       <a href="https://wiki.hoyolab.com/pc/hsr/entry/1638" target="_blank">
-        <img src="https://act-webstatic.hoyoverse.com/event-static-hoyowiki-admin/2023/12/25/a1e3b879dfd5b4a7bbbef9e0f945cd3e_6228894815740263585.png?x-oss-process=image%2Fformat%2Cwebp" alt="阮梅">
+        <img
+          src="https://act-webstatic.hoyoverse.com/event-static-hoyowiki-admin/2023/12/25/a1e3b879dfd5b4a7bbbef9e0f945cd3e_6228894815740263585.png?x-oss-process=image%2Fformat%2Cwebp"
+          alt="阮梅"
+        />
       </a>
       <div class="name">阮梅</div>
       <div class="role">同諧・冰屬性</div>
@@ -167,7 +201,10 @@
     <div class="card">
       <div class="version">1.4</div>
       <a href="https://wiki.hoyolab.com/pc/hsr/entry/1387" target="_blank">
-        <img src="https://upload-static.hoyoverse.com/hoyolab-wiki/2023/10/10/125413385/3977d62ea4d0fe0255c5150e1033179a_2252221299087830198.png?x-oss-process=image%2Fformat%2Cwebp" alt="鏡流">
+        <img
+          src="https://upload-static.hoyoverse.com/hoyolab-wiki/2023/10/10/125413385/3977d62ea4d0fe0255c5150e1033179a_2252221299087830198.png?x-oss-process=image%2Fformat%2Cwebp"
+          alt="鏡流"
+        />
       </a>
       <div class="name">鏡流</div>
       <div class="role">毀滅・冰屬性</div>
@@ -176,7 +213,10 @@
     <div class="card">
       <div class="version">1.3</div>
       <a href="https://wiki.hoyolab.com/pc/hsr/entry/804" target="_blank">
-        <img src="https://upload-static.hoyoverse.com/hoyolab-wiki/2023/09/07/11038150/62924fc83e472e9e9b9c1c69c52f335a_7902215392292474213.png?x-oss-process=image%2Fformat%2Cwebp" alt="符玄">
+        <img
+          src="https://upload-static.hoyoverse.com/hoyolab-wiki/2023/09/07/11038150/62924fc83e472e9e9b9c1c69c52f335a_7902215392292474213.png?x-oss-process=image%2Fformat%2Cwebp"
+          alt="符玄"
+        />
       </a>
       <div class="name">符玄</div>
       <div class="role">存護・量子屬性</div>
@@ -184,13 +224,15 @@
 
     <div class="card">
       <div class="version">1.0</div>
-      <a href="https://wiki.hoyolab.com/pc/hsr/entry/15" target="_blank">
-        <img src="https://upload-static.hoyoverse.com/hoyowiki/2023/02/21/5060d2a342075d081928230f28d6c68b_5889631051507738416.png?x-oss-process=image%2Fformat%2Cwebp" alt="希兒">
+      <a href="https://wiki.hoyolab.com/pc/hsr/entry/291" target="_blank">
+        <img
+          src="https://upload-static.hoyoverse.com/hoyowiki/2023/02/21/5060d2a342075d081928230f28d6c68b_5889631051507738416.png?x-oss-process=image%2Fformat%2Cwebp"
+          alt="希兒"
+        />
       </a>
       <div class="name">希兒</div>
       <div class="role">巡獵・量子屬性</div>
     </div>
-
   </div>
 </body>
 </html>
