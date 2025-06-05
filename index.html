@@ -20,6 +20,12 @@
       right: 47.5%;
     }
 
+    .bg-button-container {
+      position: absolute;
+      bottom: 5%;
+      right: 2%;
+    }
+
     .btn {
       background-color: rgba(224, 225, 225, 0.6);
       color: #696969;
@@ -41,5 +47,23 @@
   <div class="button-container">
     <a href="role.html"><button class="btn">角色</button></a>
   </div>
+
+  <div class="bg-button-container">
+    <button class="btn" onclick="changeBackground()">換背景</button>
+  </div>
+
+  <script>
+    const backgrounds = [
+      "https://upload-os-bbs.hoyolab.com/upload/2025/03/28/4a94648935235d0c4218bc8c83690b97_2098915931870472620.jpg",
+      "https://i.imgur.com/eQaHWAB.jpg",
+      "https://s.yimg.com/os/creatr-uploaded-images/2024-03/4e68ae90-e813-11ee-9ade-6b4ab1a578fb"
+    ];
+    let current = 0;
+
+    function changeBackground() {
+      current = (current + 1) % backgrounds.length;
+      document.body.style.backgroundImage = `url('${backgrounds[current]}')`;
+    }
+  </script>
 </body>
 </html>
