@@ -89,6 +89,11 @@
     #suggestions div:hover {
       background-color: #eee;
     }
+    #noResult {
+      color: #f88;
+      margin-top: 10px;
+      display: none;
+    }
 
     /* 回到頂部按鈕樣式 */
     #backToTop {
@@ -160,6 +165,7 @@
         <button onclick="searchCharacter()" style="padding:10px 20px; font-size:16px; border-radius:8px;">搜尋</button>
       </div>
       <div id="suggestions"></div>
+      <div id="noResult">找不到角色！</div>
     </div>
   </div>
 
@@ -182,6 +188,7 @@
 
     const searchInput = document.getElementById("searchInput");
     const suggestions = document.getElementById("suggestions");
+    const noResult = document.getElementById("noResult");
 
     searchInput.addEventListener("keydown", e => {
       if (e.key === "Enter") {
@@ -192,8 +199,9 @@
     });
 
     function showSuggestions() {
-      const input = searchInput.value.toLowerCase();
+      const input = searchInput.value.trim().toLowerCase();
       suggestions.innerHTML = "";
+      noResult.style.display = "none";
       if (!input) return;
       characters.filter(name => name.toLowerCase().includes(input))
         .forEach(name => {
@@ -220,13 +228,11 @@
           found = true;
         }
       });
-      if (!found) alert('找不到角色！');
-    }
-
-    function jumpToCharacter(name) {
-      searchInput.value = name;
-      searchCharacter();
-      suggestions.innerHTML = "";
+      if (!found) {
+        noResult.style.display = 'block';
+      } else {
+        noResult.style.display = 'none';
+      }
     }
 
     // 載入角色卡
