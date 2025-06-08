@@ -65,6 +65,29 @@
       border-radius: 8px;
       cursor: pointer;
     }
+     #backToTop {
+      display: none;
+      position: fixed;
+      bottom: 40px;
+      right: 4px;
+      width: 42px;
+      height: 42px;
+      font-size: 24px;
+      line-height: 35px;
+      text-align: center;
+      border: none;
+      border-radius: 50%;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+      z-index: 1000;
+      font-weight: bold;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    #backToTop:hover {
+      background-color: #666;
+      transform: scale(1.1);
+    }
     @media (max-width: 600px) {
       .card {
         width: 90%;
@@ -85,6 +108,15 @@
         width: 24px;
         height: 24px;
       }
+
+      #backToTop {
+        bottom: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        line-height: 40px;
+      }
     }
   </style>
 </head>
@@ -92,6 +124,9 @@
   <button onclick="history.back()" class="back-button">返回</button>
 
   <div id="lightcone"></div>
+
+  <button onclick="scrollToTop()" id="backToTop" title="回到頂部">↑</button>
+
 
   <script>
     fetch('cone-grid.html')
