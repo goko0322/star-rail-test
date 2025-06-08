@@ -130,6 +130,61 @@
     </div>
   </div>
 
+  <ul style="display:flex; flex-wrap:wrap; gap:10px; list-style:none; padding:0;">
+  <li onclick="jumpToCharacter('白厄')">白厄</li>
+  <li onclick="jumpToCharacter('Archer')">Archer</li>
+  <li onclick="jumpToCharacter('Saber')">Saber</li>
+  <li onclick="jumpToCharacter('賽飛兒')">賽飛兒</li>
+  <li onclick="jumpToCharacter('風堇')">風堇</li>
+  <li onclick="jumpToCharacter('那刻夏')">那刻夏</li>
+  <li onclick="jumpToCharacter('遐蝶')">遐蝶</li>
+  <li onclick="jumpToCharacter('萬敵')">萬敵</li>
+  <li onclick="jumpToCharacter('緹寶')">緹寶</li>
+  <li onclick="jumpToCharacter('阿格萊雅')">阿格萊雅</li>
+  <li onclick="jumpToCharacter('大黑塔')">大黑塔</li>
+  <li onclick="jumpToCharacter('開拓者-記憶')">開拓者-記憶</li>
+  <li onclick="jumpToCharacter('望歸人')">望歸人</li>
+  <li onclick="jumpToCharacter('星期日')">星期日</li>
+  <li onclick="jumpToCharacter('亂破')">亂破</li>
+  <li onclick="jumpToCharacter('靈砂')">靈砂</li>
+  <li onclick="jumpToCharacter('飛霄')">飛霄</li>
+  <li onclick="jumpToCharacter('椒丘')">椒丘</li>
+  <li onclick="jumpToCharacter('雲璃')">雲璃</li>
+  <li onclick="jumpToCharacter('翡翠')">翡翠</li>
+  <li onclick="jumpToCharacter('流螢')">流螢</li>
+  <li onclick="jumpToCharacter('波提歐')">波提歐</li>
+  <li onclick="jumpToCharacter('知更鳥')">知更鳥</li>
+  <li onclick="jumpToCharacter('開拓者-同諧')">開拓者-同諧</li>
+  <li onclick="jumpToCharacter('砂金')">砂金</li>
+  <li onclick="jumpToCharacter('黃泉')">黃泉</li>
+  <li onclick="jumpToCharacter('花火')">花火</li>
+  <li onclick="jumpToCharacter('黑天鵝')">黑天鵝</li>
+  <li onclick="jumpToCharacter('真理醫生')">真理醫生</li>
+  <li onclick="jumpToCharacter('阮梅')">阮梅</li>
+  <li onclick="jumpToCharacter('銀枝')">銀枝</li>
+  <li onclick="jumpToCharacter('藿藿')">藿藿</li>
+  <li onclick="jumpToCharacter('托帕&帳帳')">托帕&帳帳</li>
+  <li onclick="jumpToCharacter('鏡流')">鏡流</li>
+  <li onclick="jumpToCharacter('符玄')">符玄</li>
+  <li onclick="jumpToCharacter('丹恆•飲月')">丹恆•飲月</li>
+  <li onclick="jumpToCharacter('卡芙卡')">卡芙卡</li>
+  <li onclick="jumpToCharacter('刃')">刃</li>
+  <li onclick="jumpToCharacter('羅剎')">羅剎</li>
+  <li onclick="jumpToCharacter('銀狼')">銀狼</li>
+  <li onclick="jumpToCharacter('景元')">景元</li>
+  <li onclick="jumpToCharacter('希兒')">希兒</li>
+  <li onclick="jumpToCharacter('白露')">白露</li>
+  <li onclick="jumpToCharacter('彥卿')">彥卿</li>
+  <li onclick="jumpToCharacter('克拉拉')">克拉拉</li>
+  <li onclick="jumpToCharacter('傑帕德')">傑帕德</li>
+  <li onclick="jumpToCharacter('布洛妮婭')">布洛妮婭</li>
+  <li onclick="jumpToCharacter('瓦爾特')">瓦爾特</li>
+  <li onclick="jumpToCharacter('姬子')">姬子</li>
+  <li onclick="jumpToCharacter('開拓者-存護')">開拓者-存護</li>
+  <li onclick="jumpToCharacter('開拓者-毀滅')">開拓者-毀滅</li>
+</ul>
+</div>  
+
 
   <div class="character-grid">
     <div class="card">
@@ -800,6 +855,12 @@
         }
       });
       if (!found) alert('找不到角色！');
+    }
+
+    function jumpToCharacter(name) {
+      searchInput.value = name;
+      searchCharacter();
+      suggestions.innerHTML = "";
     }
 
     document.addEventListener("click", e => {
