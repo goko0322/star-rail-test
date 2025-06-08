@@ -57,7 +57,6 @@
       font-weight: bold;
     }
     .back-button {
-      margin-bottom: 20px;
       padding: 10px 20px;
       font-size: 16px;
       font-weight: bold;
@@ -70,17 +69,25 @@
     #searchInput {
       padding: 10px;
       font-size: 16px;
-      width: 80%;
-      max-width: 400px;
-      margin-bottom: 5px;
+      width: 250px;
       border-radius: 8px;
     }
     #suggestions {
+      position: absolute;
       background: #fff;
-      max-width: 400px;
-      margin: 0 auto 20px;
+      width: 250px;
+      margin-top: 5px;
       border-radius: 8px;
       overflow: hidden;
+      z-index: 10;
+    }
+    #suggestions div {
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+    }
+    #suggestions div:hover {
+      background-color: #eee;
     }
     @media (max-width: 600px) {
       .card {
@@ -104,20 +111,22 @@
 </head>
 <body>
 
- <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
-    <button onclick="history.back()" class="back-button" style="margin-bottom: 0;">返回</button>
+  <!-- 返回與搜尋區塊 -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
+    <button onclick="history.back()" class="back-button">返回</button>
 
-    <!-- 搜尋欄和按鈕同排 -->
-    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="輸入角色名稱..."
-        oninput="showSuggestions()"
-        autocomplete="off"
-        style="padding: 10px; font-size: 16px; width: 250px; border-radius: 8px;"
-      />
-      <button onclick="searchCharacter()" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold;">搜尋</button>
+    <div style="position: relative;">
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="輸入角色名稱..."
+          oninput="showSuggestions()"
+          autocomplete="off"
+        />
+        <button onclick="searchCharacter()" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold;">搜尋</button>
+      </div>
+      <div id="suggestions"></div>
     </div>
   </div>
 
@@ -737,7 +746,7 @@
     </div>
   </div>
 
-  <!-- 搜尋功能腳本 -->
+  <!-- 搜尋腳本 -->
   <script>
     const characters = ["白厄", "Archer", "Saber"];
 
@@ -755,9 +764,6 @@
       matched.forEach(name => {
         const div = document.createElement("div");
         div.textContent = name;
-        div.style.padding = "8px";
-        div.style.cursor = "pointer";
-        div.style.borderBottom = "1px solid #ccc";
         div.onclick = () => {
           document.getElementById("searchInput").value = name;
           suggestionBox.innerHTML = "";
@@ -788,6 +794,13 @@
         alert("找不到角色！");
       }
     }
+
+    // 點空白自動關閉建議清單
+    document.addEventListener("click", function (e) {
+      if (!document.getElementById("searchInput").contains(e.target)) {
+        document.getElementById("suggestions").innerHTML = "";
+      }
+    });
   </script>
   
 </body>
