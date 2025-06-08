@@ -23,16 +23,13 @@
       margin-top: 40px;
     }
     .card {
-      background-color: 	#000000;
+      background-color: #000000;
       border-radius: 15px;
       box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
       width: 300px;
       padding: 20px;
       transition: transform 0.3s;
     }
-
-
-
     .card:hover {
       transform: scale(1.05);
     }
@@ -70,6 +67,21 @@
       border-radius: 8px;
       cursor: pointer;
     }
+    #searchInput {
+      padding: 10px;
+      font-size: 16px;
+      width: 80%;
+      max-width: 400px;
+      margin-bottom: 5px;
+      border-radius: 8px;
+    }
+    #suggestions {
+      background: #fff;
+      max-width: 400px;
+      margin: 0 auto 20px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
     @media (max-width: 600px) {
       .card {
         width: 90%;
@@ -91,7 +103,20 @@
   </style>
 </head>
 <body>
+
   <button onclick="history.back()" class="back-button">返回</button>
+
+  <!-- 搜尋區 -->
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="輸入角色名稱..."
+    oninput="showSuggestions()"
+    autocomplete="off"
+  />
+  <div id="suggestions"></div>
+  <button onclick="searchCharacter()" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold;">搜尋</button>
+
 
   <div class="character-grid">
     <div class="card">
@@ -707,5 +732,59 @@
       <div class="role">毀滅・物理屬性</div>
     </div>
   </div>
+
+  <!-- 搜尋功能腳本 -->
+  <script>
+    const characters = ["白厄", "Archer", "Saber"];
+
+    function showSuggestions() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const suggestionBox = document.getElementById("suggestions");
+      suggestionBox.innerHTML = "";
+
+      if (!input) return;
+
+      const matched = characters.filter(name =>
+        name.toLowerCase().includes(input)
+      );
+
+      matched.forEach(name => {
+        const div = document.createElement("div");
+        div.textContent = name;
+        div.style.padding = "8px";
+        div.style.cursor = "pointer";
+        div.style.borderBottom = "1px solid #ccc";
+        div.onclick = () => {
+          document.getElementById("searchInput").value = name;
+          suggestionBox.innerHTML = "";
+          searchCharacter();
+        };
+        suggestionBox.appendChild(div);
+      });
+    }
+
+    function searchCharacter() {
+      const input = document.getElementById("searchInput").value.trim().toLowerCase();
+      const cards = document.querySelectorAll(".card");
+
+      let found = false;
+      cards.forEach(card => {
+        const name = card.querySelector(".name").textContent.toLowerCase();
+        if (name.includes(input)) {
+          card.scrollIntoView({ behavior: "smooth", block: "center" });
+          card.style.border = "3px solid yellow";
+          setTimeout(() => {
+            card.style.border = "";
+          }, 1500);
+          found = true;
+        }
+      });
+
+      if (!found) {
+        alert("找不到角色！");
+      }
+    }
+  </script>
+  
 </body>
 </html>
