@@ -126,69 +126,18 @@
         />
         <button onclick="searchCharacter()" style="padding:10px 20px; font-size:16px; border-radius:8px;">搜尋</button>
       </div>
-      <div id="suggestions" style="position:absolute; background:#fff; width:250px; margin-top:5px; border-radius:8px; overflow:hidden; z-index:10;"></div>
+      <div id="suggestions"></div>
     </div>
   </div>
 
-  <ul style="display:flex; flex-wrap:wrap; gap:10px; list-style:none; padding:0;">
-  <li onclick="jumpToCharacter('白厄')">白厄</li>
-  <li onclick="jumpToCharacter('Archer')">Archer</li>
-  <li onclick="jumpToCharacter('Saber')">Saber</li>
-  <li onclick="jumpToCharacter('賽飛兒')">賽飛兒</li>
-  <li onclick="jumpToCharacter('風堇')">風堇</li>
-  <li onclick="jumpToCharacter('那刻夏')">那刻夏</li>
-  <li onclick="jumpToCharacter('遐蝶')">遐蝶</li>
-  <li onclick="jumpToCharacter('萬敵')">萬敵</li>
-  <li onclick="jumpToCharacter('緹寶')">緹寶</li>
-  <li onclick="jumpToCharacter('阿格萊雅')">阿格萊雅</li>
-  <li onclick="jumpToCharacter('大黑塔')">大黑塔</li>
-  <li onclick="jumpToCharacter('開拓者-記憶')">開拓者-記憶</li>
-  <li onclick="jumpToCharacter('望歸人')">望歸人</li>
-  <li onclick="jumpToCharacter('星期日')">星期日</li>
-  <li onclick="jumpToCharacter('亂破')">亂破</li>
-  <li onclick="jumpToCharacter('靈砂')">靈砂</li>
-  <li onclick="jumpToCharacter('飛霄')">飛霄</li>
-  <li onclick="jumpToCharacter('椒丘')">椒丘</li>
-  <li onclick="jumpToCharacter('雲璃')">雲璃</li>
-  <li onclick="jumpToCharacter('翡翠')">翡翠</li>
-  <li onclick="jumpToCharacter('流螢')">流螢</li>
-  <li onclick="jumpToCharacter('波提歐')">波提歐</li>
-  <li onclick="jumpToCharacter('知更鳥')">知更鳥</li>
-  <li onclick="jumpToCharacter('開拓者-同諧')">開拓者-同諧</li>
-  <li onclick="jumpToCharacter('砂金')">砂金</li>
-  <li onclick="jumpToCharacter('黃泉')">黃泉</li>
-  <li onclick="jumpToCharacter('花火')">花火</li>
-  <li onclick="jumpToCharacter('黑天鵝')">黑天鵝</li>
-  <li onclick="jumpToCharacter('真理醫生')">真理醫生</li>
-  <li onclick="jumpToCharacter('阮梅')">阮梅</li>
-  <li onclick="jumpToCharacter('銀枝')">銀枝</li>
-  <li onclick="jumpToCharacter('藿藿')">藿藿</li>
-  <li onclick="jumpToCharacter('托帕&帳帳')">托帕&帳帳</li>
-  <li onclick="jumpToCharacter('鏡流')">鏡流</li>
-  <li onclick="jumpToCharacter('符玄')">符玄</li>
-  <li onclick="jumpToCharacter('丹恆•飲月')">丹恆•飲月</li>
-  <li onclick="jumpToCharacter('卡芙卡')">卡芙卡</li>
-  <li onclick="jumpToCharacter('刃')">刃</li>
-  <li onclick="jumpToCharacter('羅剎')">羅剎</li>
-  <li onclick="jumpToCharacter('銀狼')">銀狼</li>
-  <li onclick="jumpToCharacter('景元')">景元</li>
-  <li onclick="jumpToCharacter('希兒')">希兒</li>
-  <li onclick="jumpToCharacter('白露')">白露</li>
-  <li onclick="jumpToCharacter('彥卿')">彥卿</li>
-  <li onclick="jumpToCharacter('克拉拉')">克拉拉</li>
-  <li onclick="jumpToCharacter('傑帕德')">傑帕德</li>
-  <li onclick="jumpToCharacter('布洛妮婭')">布洛妮婭</li>
-  <li onclick="jumpToCharacter('瓦爾特')">瓦爾特</li>
-  <li onclick="jumpToCharacter('姬子')">姬子</li>
-  <li onclick="jumpToCharacter('開拓者-存護')">開拓者-存護</li>
-  <li onclick="jumpToCharacter('開拓者-毀滅')">開拓者-毀滅</li>
-</ul>
-</div>  
+  <!-- 角色名稱清單 -->
+  <ul id="characterList" style="display:flex; flex-wrap:wrap; gap:10px; list-style:none; padding:0;"></ul>
 
-<div id="characterContainer"></div>
-  
-  <!-- 搜尋腳本 -->
+  <!-- 角色卡片區（從外部載入） -->
+  <div id="characterContainer"></div>
+
   <script>
+    // 角色名稱陣列
     const characters = [
       "白厄","Archer","Saber","賽飛兒","風堇","那刻夏","遐蝶","萬敵","緹寶","阿格萊雅",
       "大黑塔","開拓者-記憶","望歸人","星期日","亂破","靈砂","飛霄","椒丘","雲璃","翡翠",
@@ -198,36 +147,36 @@
       "瓦爾特","姬子","開拓者-存護","開拓者-毀滅"
     ];
 
-    const searchInput = document.getElementById("searchInput");
-    const suggestions = document.getElementById("suggestions");
-
-    searchInput.addEventListener("keydown", e => {
-      if (e.key === "Enter") {
-        e.preventDefault();  // 防止表單送出或其他預設行為
-        searchCharacter();
-        suggestions.innerHTML = "";
-      }
+    // 生成清單
+    const listEl = document.getElementById('characterList');
+    characters.forEach(name => {
+      const li = document.createElement('li');
+      li.textContent = name;
+      li.style.cursor = 'pointer';
+      li.onclick = () => jumpToCharacter(name);
+      listEl.appendChild(li);
     });
 
+    // 顯示建議
     function showSuggestions() {
       const input = searchInput.value.toLowerCase();
-      suggestions.innerHTML = "";
+      const box = suggestions;
+      box.innerHTML = "";
       if (!input) return;
-      characters.filter(name => name.toLowerCase().includes(input))
+      characters.filter(n => n.toLowerCase().includes(input))
         .forEach(name => {
           const div = document.createElement("div");
           div.textContent = name;
-          div.style.padding = "8px";
-          div.style.cursor = "pointer";
           div.onclick = () => {
             searchInput.value = name;
-            suggestions.innerHTML = "";
+            box.innerHTML = "";
             searchCharacter();
           };
-          suggestions.appendChild(div);
+          box.appendChild(div);
         });
     }
 
+    // 搜尋角色
     function searchCharacter() {
       const term = searchInput.value.trim().toLowerCase();
       let found = false;
@@ -243,17 +192,27 @@
       if (!found) alert('找不到角色！');
     }
 
+    // 點擊清單跳轉卡片
     function jumpToCharacter(name) {
       searchInput.value = name;
       searchCharacter();
-      suggestions.innerHTML = "";
     }
 
+    // 載入角色卡區塊
+    fetch('character-grid.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('characterContainer').innerHTML = html;
+      })
+      .catch(err => {
+        console.error('載入角色卡失敗:', err);
+      });
+
+    // 點擊頁面其他地方收起建議框
     document.addEventListener("click", e => {
-      if (!searchInput.contains(e.target)) {
-        suggestions.innerHTML = "";
-      }
+      if (!searchInput.contains(e.target)) suggestions.innerHTML = "";
     });
   </script>
+
 </body>
 </html>
