@@ -104,18 +104,22 @@
 </head>
 <body>
 
-  <button onclick="history.back()" class="back-button">返回</button>
+ <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
+    <button onclick="history.back()" class="back-button" style="margin-bottom: 0;">返回</button>
 
-  <!-- 搜尋區 -->
-  <input
-    type="text"
-    id="searchInput"
-    placeholder="輸入角色名稱..."
-    oninput="showSuggestions()"
-    autocomplete="off"
-  />
-  <div id="suggestions"></div>
-  <button onclick="searchCharacter()" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold;">搜尋</button>
+    <!-- 搜尋欄和按鈕同排 -->
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="輸入角色名稱..."
+        oninput="showSuggestions()"
+        autocomplete="off"
+        style="padding: 10px; font-size: 16px; width: 250px; border-radius: 8px;"
+      />
+      <button onclick="searchCharacter()" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold;">搜尋</button>
+    </div>
+  </div>
 
 
   <div class="character-grid">
