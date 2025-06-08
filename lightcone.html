@@ -99,6 +99,17 @@
       .then(html => {
         document.getElementById('lightcone').innerHTML = html;
       });
+
+    // 顯示/隱藏回到頂部按鈕
+    window.addEventListener("scroll", () => {
+      const btn = document.getElementById("backToTop");
+      btn.style.display = document.documentElement.scrollTop > 300 ? "block" : "none";
+    });
+
+    // 滑動回頂部
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   </script>
 </body>
 </html>
