@@ -112,21 +112,21 @@
 <body>
 
   <!-- 返回與搜尋區塊 -->
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap;">
     <button onclick="history.back()" class="back-button">返回</button>
-
-    <div style="position: relative;">
-      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+    <div style="position:relative;">
+      <div style="display:flex; gap:10px;">
         <input
           type="text"
           id="searchInput"
           placeholder="輸入角色名稱..."
           oninput="showSuggestions()"
           autocomplete="off"
+          style="padding:10px; font-size:16px; width:250px; border-radius:8px;"
         />
-        <button onclick="searchCharacter()" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; font-weight: bold;">搜尋</button>
+        <button onclick="searchCharacter()" style="padding:10px 20px; font-size:16px; border-radius:8px;">搜尋</button>
       </div>
-      <div id="suggestions"></div>
+      <div id="suggestions" style="position:absolute; background:#fff; width:250px; margin-top:5px; border-radius:8px; overflow:hidden; z-index:10;"></div>
     </div>
   </div>
 
@@ -749,66 +749,64 @@
   <!-- 搜尋腳本 -->
   <script>
     const characters = [
-  "白厄","Archer","Saber","賽飛兒","風堇","那刻夏","遐蝶","萬敵","緹寶","阿格萊雅",
-  "大黑塔","開拓者-記憶","望歸人","星期日","亂破","靈砂","飛霄","椒丘","雲璃","翡翠",
-  "流螢","波提歐","知更鳥","開拓者-同諧","砂金","黃泉","花火","黑天鵝",
-  "真理醫生","阮梅","銀枝","藿藿","托帕&帳帳","鏡流","符玄","丹恆•飲月","卡芙卡",
-  "刃","羅剎","銀狼","景元","希兒","白露","彥卿","克拉拉","傑帕德","布洛妮婭",
-  "瓦爾特","姬子","開拓者-存護","開拓者-毀滅"
-];
+      "白厄","Archer","Saber","賽飛兒","風堇","那刻夏","遐蝶","萬敵","緹寶","阿格萊雅",
+      "大黑塔","開拓者-記憶","望歸人","星期日","亂破","靈砂","飛霄","椒丘","雲璃","翡翠",
+      "流螢","波提歐","知更鳥","開拓者-同諧","砂金","黃泉","花火","黑天鵝",
+      "真理醫生","阮梅","銀枝","藿藿","托帕&帳帳","鏡流","符玄","丹恆•飲月","卡芙卡",
+      "刃","羅剎","銀狼","景元","希兒","白露","彥卿","克拉拉","傑帕德","布洛妮婭",
+      "瓦爾特","姬子","開拓者-存護","開拓者-毀滅"
+    ];
+
+    const searchInput = document.getElementById("searchInput");
+    const suggestions = document.getElementById("suggestions");
+
+    searchInput.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();  // 防止表單送出或其他預設行為
+        searchCharacter();
+        suggestions.innerHTML = "";
+      }
+    });
 
     function showSuggestions() {
-      const input = document.getElementById("searchInput").value.toLowerCase();
-      const suggestionBox = document.getElementById("suggestions");
-      suggestionBox.innerHTML = "";
-
+      const input = searchInput.value.toLowerCase();
+      suggestions.innerHTML = "";
       if (!input) return;
-
-      const matched = characters.filter(name =>
-        name.toLowerCase().includes(input)
-      );
-
-      matched.forEach(name => {
-        const div = document.createElement("div");
-        div.textContent = name;
-        div.onclick = () => {
-          document.getElementById("searchInput").value = name;
-          suggestionBox.innerHTML = "";
-          searchCharacter();
-        };
-        suggestionBox.appendChild(div);
-      });
+      characters.filter(name => name.toLowerCase().includes(input))
+        .forEach(name => {
+          const div = document.createElement("div");
+          div.textContent = name;
+          div.style.padding = "8px";
+          div.style.cursor = "pointer";
+          div.onclick = () => {
+            searchInput.value = name;
+            suggestions.innerHTML = "";
+            searchCharacter();
+          };
+          suggestions.appendChild(div);
+        });
     }
 
     function searchCharacter() {
-      const input = document.getElementById("searchInput").value.trim().toLowerCase();
-      const cards = document.querySelectorAll(".card");
-
+      const term = searchInput.value.trim().toLowerCase();
       let found = false;
-      cards.forEach(card => {
-        const name = card.querySelector(".name").textContent.toLowerCase();
-        if (name.includes(input)) {
-          card.scrollIntoView({ behavior: "smooth", block: "center" });
-          card.style.border = "3px solid yellow";
-          setTimeout(() => {
-            card.style.border = "";
-          }, 1500);
+      document.querySelectorAll('.card').forEach(card => {
+        const name = card.querySelector('.name').textContent.toLowerCase();
+        if (name.includes(term)) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.style.border = '3px solid yellow';
+          setTimeout(() => card.style.border = '', 1500);
           found = true;
         }
       });
-
-      if (!found) {
-        alert("找不到角色！");
-      }
+      if (!found) alert('找不到角色！');
     }
 
-    // 點空白自動關閉建議清單
-    document.addEventListener("click", function (e) {
-      if (!document.getElementById("searchInput").contains(e.target)) {
-        document.getElementById("suggestions").innerHTML = "";
+    document.addEventListener("click", e => {
+      if (!searchInput.contains(e.target)) {
+        suggestions.innerHTML = "";
       }
     });
   </script>
-  
 </body>
 </html>
