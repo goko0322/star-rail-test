@@ -193,6 +193,16 @@
       suggestions.innerHTML = "";
     }
 
+    // 載入角色卡區塊
+    fetch('character-grid.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('characterContainer').innerHTML = html;
+      })
+      .catch(err => {
+        console.error('載入角色卡失敗:', err);
+      });
+
     document.addEventListener("click", e => {
       if (!searchInput.contains(e.target)) {
         suggestions.innerHTML = "";
