@@ -95,8 +95,15 @@
       padding: 8px;
       border-radius: 8px;
       font-weight: bold;
+      display: none; /* 建議1：預設隱藏 */
+      margin-top: 5px;
     }
 
+    /* 高亮邊框動畫 */
+    @keyframes highlightBorder {
+      0% { border-color: yellow; }
+      100% { border-color: transparent; }
+    }
 
     /* 回到頂部按鈕樣式 */
     #backToTop {
@@ -193,6 +200,15 @@
     const suggestions = document.getElementById("suggestions");
     const noResult = document.getElementById("noResult");
 
+    // 將字串轉半形並小寫（簡易處理全半形）
+    function normalizeText(text) {
+      return text
+        .toLowerCase()
+        .replace(/[\uFF01-\uFF5E]/g, ch =>
+          String.fromCharCode(ch.charCodeAt(0) - 0xFEE0)
+        );
+    }
+
     searchInput.addEventListener("keydown", e => {
       if (e.key === "Enter") {
         e.preventDefault();
@@ -202,11 +218,11 @@
     });
 
     function showSuggestions() {
-      const input = searchInput.value.trim().toLowerCase();
+      const input = normalizeText(searchInput.value.trim());
       suggestions.innerHTML = "";
       noResult.style.display = "none";
       if (!input) return;
-      characters.filter(name => name.toLowerCase().includes(input))
+      characters.filter(name => normalizeText(name).includes(input))
         .forEach(name => {
           const div = document.createElement("div");
           div.textContent = name;
@@ -220,14 +236,17 @@
     }
 
     function searchCharacter() {
-      const term = searchInput.value.trim().toLowerCase();
+      const term = normalizeText(searchInput.value.trim());
       let found = false;
       document.querySelectorAll('.card').forEach(card => {
-        const name = card.querySelector('.name').textContent.toLowerCase();
+        const name = normalizeText(card.querySelector('.name').textContent);
         if (name.includes(term)) {
           card.scrollIntoView({ behavior: 'smooth', block: 'center' });
           card.style.border = '3px solid yellow';
-          setTimeout(() => card.style.border = '', 1500);
+          // 加入動畫，3秒後消失
+          setTimeout(() => {
+            card.style.border = '';
+          }, 3000);
           found = true;
         }
       });
@@ -245,6 +264,7 @@
         document.getElementById('characterContainer').innerHTML = html;
       })
       .catch(err => {
+        document.getElementById('characterContainer').innerHTML = "<p style='color:white;'>角色載入失敗，請稍後再試。</p>";
         console.error('載入角色卡失敗:', err);
       });
 
