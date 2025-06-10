@@ -3,52 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>崩壞鐵道角色</title>
+  <title>崩鐵角色</title>
   <style>
     body {
       font-family: "微軟正黑體", sans-serif;
       background-color: #082567;
-      color: #fff;
+      color: #000;
       text-align: center;
-      padding: 20px;
+      padding: 30px;
     }
     h1 {
-      color: #fff;
-      margin-bottom: 20px;
-    }
-    .search-container {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    #searchInput {
-      padding: 10px;
-      font-size: 16px;
-      width: 250px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-    .button-group {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
-    .button-group button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #444;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .button-group button:hover {
-      background-color: #666;
+      color: #222;
     }
     .character-grid {
       display: flex;
@@ -58,12 +23,11 @@
       margin-top: 40px;
     }
     .card {
-      background-color: #222;
+      background-color: #000;
       border-radius: 15px;
       box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-      width: 250px;
-      padding: 15px;
-      text-align: center;
+      width: 300px;
+      padding: 20px;
       transition: transform 0.3s;
     }
     .card:hover {
@@ -71,26 +35,60 @@
     }
     .card img {
       width: 100%;
-      height: 300px;
+      height: 400px;
       object-fit: cover;
       border-radius: 10px;
       cursor: pointer;
     }
     .name {
       margin-top: 10px;
-      font-size: 18px;
+      font-size: 20px;
       color: #f8f8f8;
       font-weight: bold;
     }
     .role {
-      font-size: 14px;
+      font-size: 16px;
       color: #ccc;
     }
     .version {
-      font-size: 16px;
+      font-size: 20px;
       color: #fff;
       margin-bottom: 10px;
       font-weight: bold;
+    }
+    .back-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #444;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #searchInput {
+      padding: 10px;
+      font-size: 16px;
+      width: 250px;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+    #suggestions {
+      position: absolute;
+      background: #fff;
+      width: 250px;
+      margin-top: 5px;
+      border-radius: 8px;
+      overflow: hidden;
+      z-index: 10;
+    }
+    #suggestions div {
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+    }
+    #suggestions div:hover {
+      background-color: #eee;
     }
     #noResult {
       color: #fff;
@@ -104,12 +102,12 @@
     #backToTop {
       display: none;
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
+      bottom: 40px;
+      right: 4px;
+      width: 42px;
+      height: 42px;
       font-size: 24px;
-      line-height: 50px;
+      line-height: 35px;
       text-align: center;
       border: none;
       border-radius: 50%;
@@ -117,6 +115,8 @@
       color: white;
       cursor: pointer;
       z-index: 1000;
+      font-weight: bold;
+      transition: background-color 0.3s, transform 0.3s;
     }
     #backToTop:hover {
       background-color: #666;
@@ -126,7 +126,11 @@
       #searchInput {
         width: 100%;
       }
-      .button-group button {
+      div[style*="display:flex; gap:10px;"] {
+        flex-direction: column !important;
+        gap: 10px !important;
+      }
+      div[style*="display:flex; gap:10px;"] button {
         width: 100%;
         padding: 12px 0;
       }
@@ -135,10 +139,16 @@
         padding: 10px;
       }
       .card img {
-        height: 250px;
+        height: auto;
       }
-      .name, .role, .version {
+      .name,
+      .role,
+      .version {
+        font-size: 16px;
+      }
+      .back-button {
         font-size: 14px;
+        padding: 8px 16px;
       }
       #backToTop {
         bottom: 20px;
@@ -152,107 +162,110 @@
   </style>
 </head>
 <body>
-  <h1>崩壞鐵道角色</h1>
-  
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="搜尋角色名稱..." oninput="showSuggestions()" autocomplete="off" />
-    <button onclick="searchCharacter()">搜尋</button>
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap;">
+    <button onclick="history.back()" class="back-button">返回</button>
+    <div style="position:relative;">
+      <div style="display:flex; gap:10px;">
+        <input type="text" id="searchInput" placeholder="輸入角色名稱..." oninput="showSuggestions()" autocomplete="off" />
+        <button onclick="searchCharacter()" style="padding:10px 20px; font-size:16px; border-radius:8px;">搜尋</button>
+      </div>
+      <div id="suggestions"></div>
+      <div id="noResult">找不到角色！</div>
+    </div>
   </div>
 
-  <div class="button-group">
-    <button onclick="loadStars(5)">5⭐角色</button>
-    <button onclick="loadStars(4)">4⭐角色</button>
-    <button onclick="loadByElement('火')">火屬性</button>
-    <button onclick="loadByElement('冰')">冰屬性</button>
-    <button onclick="loadByElement('風')">風屬性</button>
-    <button onclick="loadByElement('雷')">雷屬性</button>
-    <button onclick="loadByElement('量子')">量子屬性</button>
-    <button onclick="loadByElement('虛數')">虛數屬性</button>
-    <button onclick="loadByElement('物理')">物理屬性</button>
+  <div style="margin-top: 10px; display: flex; justify-content: center; gap: 10px;">
+    <button onclick="loadStars('5')" class="back-button">5⭐</button>
+    <button onclick="loadStars('4')" class="back-button">4⭐</button>
   </div>
 
-  <div id="characterContainer" class="character-grid"></div>
-
-  <button onclick="scrollToTop()" id="backToTop">↑</button>
+  <div id="characterContainer"></div>
+  <button onclick="scrollToTop()" id="backToTop" title="回到頂部">↑</button>
 
   <script>
-    const characters = [
-      { name: "白厄", star: 5, role: "毀滅", element: "物理屬性" },
-      { name: "Archer", star: 5, role: "巡獵", element: "量子屬性" },
-      { name: "貊澤", star: 4, role: "巡獵", element: "雷屬性" },
-      { name: "三月七", star: 4, role: "巡獵", element: "虛數屬性" },
-      { name: "加拉赫", star: 4, role: "豐饒", element: "火屬性" },
-      { name: "米沙", star: 4, role: "毀滅", element: "冰屬性" },
-      { name: "雪衣", star: 4, role: "毀滅", element: "量子屬性" },
-      { name: "寒鴉", star: 4, role: "同諧", element: "物理屬性" },
-      // Add more characters here...
-    ];
+    const characters = ["白厄", "Archer", "Saber", "賽飛兒", "風堇", "那刻夏", "遐蝶", "萬敵", "緹寶", "阿格萊雅", "大黑塔", "開拓者-記憶",
+                        "望歸人", "星期日", "亂破", "靈砂", "飛霄", "椒丘", "雲璃", "翡翠", "流螢", "波提歐", "知更鳥", "開拓者-同諧", "砂金", "黃泉", "花火", "黑天鵝", 
+                        "真理醫生", "阮梅", "銀枝", "藿藿", "托帕&帳帳", "鏡流", "符玄", "丹恆•飲月", "卡芙卡", "刃", "羅剎", "銀狼", "景元", "希兒",
+                        "白露", "彥卿", "克拉拉", "傑帕德", "布洛妮婭", "瓦爾特", "姬子", "開拓者-存護", "開拓者-毀滅",
+                        "貊澤", "三月七•巡獵", "加拉赫", "米沙", "雪衣", "寒鴉", "桂乃芬", "玲可", "盧卡", "馭空",
+                        "素裳", "停雲", "青雀", "虎克", "桑博", "佩拉", "娜塔莎", "希露瓦", "黑塔", "艾絲妲", "阿蘭", "丹恆", "三月七"
+                       ];
 
     const searchInput = document.getElementById("searchInput");
+    const suggestions = document.getElementById("suggestions");
     const noResult = document.getElementById("noResult");
 
     function normalizeText(text) {
       return text.toLowerCase().replace(/[！-～]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0xFEE0));
     }
 
+    searchInput.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        searchCharacter();
+        suggestions.innerHTML = "";
+      }
+    });
+
     function showSuggestions() {
       const input = normalizeText(searchInput.value.trim());
+      suggestions.innerHTML = "";
       noResult.style.display = "none";
       if (!input) return;
-      const suggestions = characters.filter(character => normalizeText(character.name).includes(input));
-      if (suggestions.length === 0) {
-        noResult.style.display = "block";
-      } else {
-        noResult.style.display = "none";
-      }
+      characters.filter(name => normalizeText(name).includes(input)).forEach(name => {
+        const div = document.createElement("div");
+        div.textContent = name;
+        div.onclick = () => {
+          searchInput.value = name;
+          suggestions.innerHTML = "";
+          searchCharacter();
+        };
+        suggestions.appendChild(div);
+      });
     }
 
     function searchCharacter() {
       const term = normalizeText(searchInput.value.trim());
-      const filtered = characters.filter(character => normalizeText(character.name).includes(term));
-      displayCharacters(filtered);
-      if (filtered.length === 0) {
-        noResult.style.display = "block";
-      } else {
-        noResult.style.display = "none";
-      }
+      let found = false;
+      document.querySelectorAll('.card').forEach(card => {
+        const name = normalizeText(card.querySelector('.name').textContent);
+        if (name.includes(term)) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.style.border = '3px solid yellow';
+          setTimeout(() => { card.style.border = ''; }, 3000);
+          found = true;
+        }
+      });
+      noResult.style.display = found ? 'none' : 'block';
     }
 
     function loadStars(star) {
-      const filtered = characters.filter(character => character.star === star);
-      displayCharacters(filtered);
+      const url = star === '5' ? 'character-grid.html' : 'character-grid-4star.html';
+      fetch(url)
+        .then(response => response.text())
+        .then(html => { document.getElementById('characterContainer').innerHTML = html; })
+        .catch(err => {
+          document.getElementById('characterContainer').innerHTML = "<p style='color:white;'>角色載入失敗，請稍後再試。</p>";
+          console.error('載入角色卡失敗:', err);
+        });
     }
 
-    function loadByElement(element) {
-      const filtered = characters.filter(character => character.element === element);
-      displayCharacters(filtered);
-    }
+    loadStars('5');
 
-    function displayCharacters(filtered) {
-      const container = document.getElementById("characterContainer");
-      container.innerHTML = "";
-      filtered.forEach(character => {
-        const card = document.createElement('div');
-        card.classList.add('card');
-        card.innerHTML = `
-          <div class="name">${character.name}</div>
-          <div class="role">${character.role} - ${character.element}</div>
-          <div class="version">版本: ${character.star}⭐</div>
-        `;
-        container.appendChild(card);
-      });
-    }
+    document.addEventListener("click", e => {
+      if (!searchInput.contains(e.target)) {
+        suggestions.innerHTML = "";
+      }
+    });
+
+    window.addEventListener("scroll", () => {
+      const btn = document.getElementById("backToTop");
+      btn.style.display = document.documentElement.scrollTop > 300 ? "block" : "none";
+    });
 
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    window.addEventListener('scroll', () => {
-      document.getElementById("backToTop").style.display = window.scrollY > 300 ? 'block' : 'none';
-    });
-
-    // Initial load
-    loadStars(5);
   </script>
 </body>
 </html>
