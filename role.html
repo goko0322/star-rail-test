@@ -5,24 +5,168 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>崩鐵角色</title>
   <style>
-    /* 原本的樣式不變，略... */
-    /* （你原本的 CSS 已經包含所有功能，這裡略過） */
+    body {
+      font-family: "微軟正黑體", sans-serif;
+      background-color: #082567;
+      color: #000;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      color: #222;
+    }
+    .character-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .card {
+      background-color: #000;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+      width: 300px;
+      padding: 20px;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .name {
+      margin-top: 10px;
+      font-size: 20px;
+      color: #f8f8f8;
+      font-weight: bold;
+    }
+    .role {
+      font-size: 16px;
+      color: #ccc;
+    }
+    .version {
+      font-size: 20px;
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    .back-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #444;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #searchInput {
+      padding: 10px;
+      font-size: 16px;
+      width: 250px;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+    #suggestions {
+      position: absolute;
+      background: #fff;
+      width: 250px;
+      margin-top: 5px;
+      border-radius: 8px;
+      overflow: hidden;
+      z-index: 10;
+    }
+    #suggestions div {
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+    }
+    #suggestions div:hover {
+      background-color: #eee;
+    }
+    #noResult {
+      color: #fff;
+      background-color: #f00;
+      padding: 8px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: none;
+      margin-top: 5px;
+    }
+    #backToTop {
+      display: none;
+      position: fixed;
+      bottom: 40px;
+      right: 4px;
+      width: 42px;
+      height: 42px;
+      font-size: 24px;
+      line-height: 35px;
+      text-align: center;
+      border: none;
+      border-radius: 50%;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+      z-index: 1000;
+      font-weight: bold;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    #backToTop:hover {
+      background-color: #666;
+      transform: scale(1.1);
+    }
+    @media (max-width: 600px) {
+      #searchInput {
+        width: 100%;
+      }
+      div[style*="display:flex; gap:10px;"] {
+        flex-direction: column !important;
+        gap: 10px !important;
+      }
+      div[style*="display:flex; gap:10px;"] button {
+        width: 100%;
+        padding: 12px 0;
+      }
+      .card {
+        width: 90%;
+        padding: 10px;
+      }
+      .card img {
+        height: auto;
+      }
+      .name,
+      .role,
+      .version {
+        font-size: 16px;
+      }
+      .back-button {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+      #backToTop {
+        bottom: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        line-height: 40px;
+      }
+    }
   </style>
 </head>
 <body>
-
-  <!-- 返回與搜尋區塊 -->
   <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap;">
     <button onclick="history.back()" class="back-button">返回</button>
     <div style="position:relative;">
       <div style="display:flex; gap:10px;">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="輸入角色名稱..."
-          oninput="showSuggestions()"
-          autocomplete="off"
-        />
+        <input type="text" id="searchInput" placeholder="輸入角色名稱..." oninput="showSuggestions()" autocomplete="off" />
         <button onclick="searchCharacter()" style="padding:10px 20px; font-size:16px; border-radius:8px;">搜尋</button>
       </div>
       <div id="suggestions"></div>
@@ -30,39 +174,23 @@
     </div>
   </div>
 
-  <!-- ⭐ 星級角色選擇按鈕 -->
   <div style="margin-top: 10px; display: flex; justify-content: center; gap: 10px;">
     <button onclick="loadStars('5')" class="back-button">5⭐</button>
     <button onclick="loadStars('4')" class="back-button">4⭐</button>
   </div>
 
-  <!-- 角色卡容器 -->
   <div id="characterContainer"></div>
-
-  <!-- 回到頂部按鈕 -->
   <button onclick="scrollToTop()" id="backToTop" title="回到頂部">↑</button>
 
-  <!-- JavaScript -->
   <script>
-    const characters = [
-      "白厄","Archer","Saber","賽飛兒","風堇","那刻夏","遐蝶","萬敵","緹寶","阿格萊雅",
-      "大黑塔","開拓者-記憶","望歸人","星期日","亂破","靈砂","飛霄","椒丘","雲璃","翡翠",
-      "流螢","波提歐","知更鳥","開拓者-同諧","砂金","黃泉","花火","黑天鵝",
-      "真理醫生","阮梅","銀枝","藿藿","托帕&帳帳","鏡流","符玄","丹恆•飲月","卡芙卡",
-      "刃","羅剎","銀狼","景元","希兒","白露","彥卿","克拉拉","傑帕德","布洛妮婭",
-      "瓦爾特","姬子","開拓者-存護","開拓者-毀滅"
-    ];
+    const characters = ["白厄", "Archer", "Saber", "賽飛兒", "風堇", "那刻夏", "遐蝶", "萬敵", "緹寶", "阿格萊雅", "大黑塔", "開拓者-記憶", "望歸人", "星期日", "亂破", "靈砂", "飛霄", "椒丘", "雲璃", "翡翠", "流螢", "波提歐", "知更鳥", "開拓者-同諧", "砂金", "黃泉", "花火", "黑天鵝", "真理醫生", "阮梅", "銀枝", "藿藿", "托帕&帳帳", "鏡流", "符玄", "丹恆•飲月", "卡芙卡", "刃", "羅剎", "銀狼", "景元", "希兒", "白露", "彥卿", "克拉拉", "傑帕德", "布洛妮婭", "瓦爾特", "姬子", "開拓者-存護", "開拓者-毀滅"];
 
     const searchInput = document.getElementById("searchInput");
     const suggestions = document.getElementById("suggestions");
     const noResult = document.getElementById("noResult");
 
     function normalizeText(text) {
-      return text
-        .toLowerCase()
-        .replace(/[\uFF01-\uFF5E]/g, ch =>
-          String.fromCharCode(ch.charCodeAt(0) - 0xFEE0)
-        );
+      return text.toLowerCase().replace(/[！-～]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0xFEE0));
     }
 
     searchInput.addEventListener("keydown", e => {
@@ -78,17 +206,16 @@
       suggestions.innerHTML = "";
       noResult.style.display = "none";
       if (!input) return;
-      characters.filter(name => normalizeText(name).includes(input))
-        .forEach(name => {
-          const div = document.createElement("div");
-          div.textContent = name;
-          div.onclick = () => {
-            searchInput.value = name;
-            suggestions.innerHTML = "";
-            searchCharacter();
-          };
-          suggestions.appendChild(div);
-        });
+      characters.filter(name => normalizeText(name).includes(input)).forEach(name => {
+        const div = document.createElement("div");
+        div.textContent = name;
+        div.onclick = () => {
+          searchInput.value = name;
+          suggestions.innerHTML = "";
+          searchCharacter();
+        };
+        suggestions.appendChild(div);
+      });
     }
 
     function searchCharacter() {
@@ -99,40 +226,32 @@
         if (name.includes(term)) {
           card.scrollIntoView({ behavior: 'smooth', block: 'center' });
           card.style.border = '3px solid yellow';
-          setTimeout(() => {
-            card.style.border = '';
-          }, 3000);
+          setTimeout(() => { card.style.border = ''; }, 3000);
           found = true;
         }
       });
       noResult.style.display = found ? 'none' : 'block';
     }
 
-    // ⭐ 載入角色卡 (依星級)
     function loadStars(star) {
       const url = star === '5' ? 'character-grid.html' : 'character-grid-4star.html';
       fetch(url)
         .then(response => response.text())
-        .then(html => {
-          document.getElementById('characterContainer').innerHTML = html;
-        })
+        .then(html => { document.getElementById('characterContainer').innerHTML = html; })
         .catch(err => {
           document.getElementById('characterContainer').innerHTML = "<p style='color:white;'>角色載入失敗，請稍後再試。</p>";
           console.error('載入角色卡失敗:', err);
         });
     }
 
-    // 載入預設：五星角色
     loadStars('5');
 
-    // 點畫面關閉建議
     document.addEventListener("click", e => {
       if (!searchInput.contains(e.target)) {
         suggestions.innerHTML = "";
       }
     });
 
-    // 顯示/隱藏回到頂部按鈕
     window.addEventListener("scroll", () => {
       const btn = document.getElementById("backToTop");
       btn.style.display = document.documentElement.scrollTop > 300 ? "block" : "none";
