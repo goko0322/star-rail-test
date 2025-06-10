@@ -71,6 +71,7 @@
       font-size: 16px;
       width: 250px;
       border-radius: 8px;
+      box-sizing: border-box;
     }
     #suggestions {
       position: absolute;
@@ -95,7 +96,7 @@
       padding: 8px;
       border-radius: 8px;
       font-weight: bold;
-      display: none; /* 建議1：預設隱藏 */
+      display: none;
       margin-top: 5px;
     }
 
@@ -131,6 +132,22 @@
     }
 
     @media (max-width: 600px) {
+      /* 搜尋輸入框改為寬度100% */
+      #searchInput {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      /* 搜尋框與按鈕垂直排列，間距調整 */
+      div[style*="display:flex; gap:10px;"] {
+        flex-direction: column !important;
+        gap: 10px !important;
+      }
+      div[style*="display:flex; gap:10px;"] button {
+        width: 100%;
+        padding: 12px 0;
+      }
+
+      /* 卡片與字體縮小 */
       .card {
         width: 90%;
         padding: 10px;
