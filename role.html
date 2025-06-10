@@ -174,22 +174,100 @@
     </div>
   </div>
 
-  <div style="margin-top: 10px; display: flex; justify-content: center; gap: 10px;">
+  <div style="margin-top: 10px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
     <button onclick="loadStars('5')" class="back-button">5⭐</button>
     <button onclick="loadStars('4')" class="back-button">4⭐</button>
+    <button onclick="loadByElement('火')" class="back-button">火屬性</button>
+    <button onclick="loadByElement('冰')" class="back-button">冰屬性</button>
+    <button onclick="loadByElement('風')" class="back-button">風屬性</button>
+    <button onclick="loadByElement('雷')" class="back-button">雷屬性</button>
+    <button onclick="loadByElement('量子')" class="back-button">量子屬性</button>
+    <button onclick="loadByElement('虛數')" class="back-button">虛數屬性</button>
+    <button onclick="loadByElement('物理')" class="back-button">物理屬性</button>
   </div>
 
   <div id="characterContainer"></div>
   <button onclick="scrollToTop()" id="backToTop" title="回到頂部">↑</button>
 
   <script>
-    const characters = ["白厄", "Archer", "Saber", "賽飛兒", "風堇", "那刻夏", "遐蝶", "萬敵", "緹寶", "阿格萊雅", "大黑塔", "開拓者-記憶",
-                        "望歸人", "星期日", "亂破", "靈砂", "飛霄", "椒丘", "雲璃", "翡翠", "流螢", "波提歐", "知更鳥", "開拓者-同諧", "砂金", "黃泉", "花火", "黑天鵝", 
-                        "真理醫生", "阮梅", "銀枝", "藿藿", "托帕&帳帳", "鏡流", "符玄", "丹恆•飲月", "卡芙卡", "刃", "羅剎", "銀狼", "景元", "希兒",
-                        "白露", "彥卿", "克拉拉", "傑帕德", "布洛妮婭", "瓦爾特", "姬子", "開拓者-存護", "開拓者-毀滅",
-                        "貊澤", "三月七•巡獵", "加拉赫", "米沙", "雪衣", "寒鴉", "桂乃芬", "玲可", "盧卡", "馭空",
-                        "素裳", "停雲", "青雀", "虎克", "桑博", "佩拉", "娜塔莎", "希露瓦", "黑塔", "艾絲妲", "阿蘭", "丹恆", "三月七"
-                       ];
+    const characters = [
+  { name: "白厄", star: 5, life: "毀滅", element: "物理屬性" },
+  { name: "Archer", star: 5, life: "巡獵", element: "量子屬性" },
+  { name: "Saber", star: 5, life: "毀滅", element: "風屬性" },
+  { name: "賽飛兒", star: 5, life: "虛無", element: "量子屬性" },
+  { name: "風堇", star: 5, life: "記憶", element: "風屬性" },
+  { name: "那刻夏", star: 5, life: "智識", element: "風屬性" },
+  { name: "遐蝶", star: 5, life: "記憶", element: "量子屬性" },
+  { name: "萬敵", star: 5, life: "毀滅", element: "虛數屬性" },
+  { name: "緹寶", star: 5, life: "同諧", element: "量子屬性" },
+  { name: "阿格萊雅", star: 5, life: "記憶", element: "雷屬性" },
+  { name: "大黑塔", star: 5, life: "智識", element: "冰屬性" },
+  { name: "開拓者-記憶", star: 5, life: "記憶", element: "冰屬性" },
+  { name: "望歸人", star: 5, life: "虛無", element: "火屬性" },
+  { name: "星期日", star: 5, life: "同諧", element: "虛數屬性" },
+  { name: "亂破", star: 5, life: "智識", element: "虛數屬性" },
+  { name: "靈砂", star: 5, life: "豐饒", element: "火屬性" },
+  { name: "飛霄", star: 5, life: "巡獵", element: "風屬性" },
+  { name: "椒丘", star: 5, life: "虛無", element: "火屬性" },
+  { name: "雲璃", star: 5, life: "毀滅", element: "物理屬性" },
+  { name: "翡翠", star: 5, life: "智識", element: "量子屬性" },
+  { name: "流螢", star: 5, life: "毀滅", element: "火屬性" },
+  { name: "波提歐", star: 5, life: "巡獵", element: "物理屬性" },
+  { name: "知更鳥", star: 5, life: "同諧", element: "物理屬性" },
+  { name: "開拓者-同諧", star: 5, life: "同諧", element: "虛數屬性" },
+  { name: "砂金", star: 5, life: "存護", element: "虛數屬性" },
+  { name: "黃泉", star: 5, life: "虛無", element: "雷屬性" },
+  { name: "花火", star: 5, life: "同諧", element: "量子屬性" },
+  { name: "黑天鵝", star: 5, life: "虛無", element: "風屬性" },
+  { name: "真理醫生", star: 5, life: "巡獵", element: "虛數屬性" },
+  { name: "阮梅", star: 5, life: "同諧", element: "冰屬性" },
+  { name: "銀枝", star: 5, life: "智識", element: "物理屬性" },
+  { name: "藿藿", star: 5, life: "豐饒", element: "風屬性" },
+  { name: "托帕&帳帳", star: 5, life: "巡獵", element: "火屬性" },
+  { name: "鏡流", star: 5, life: "毀滅", element: "冰屬性" },
+  { name: "符玄", star: 5, life: "存護", element: "量子屬性" },
+  { name: "丹恆•飲月", star: 5, life: "毀滅", element: "虛數屬性" },
+  { name: "卡芙卡", star: 5, life: "虛無", element: "雷屬性" },
+  { name: "刃", star: 5, life: "毀滅", element: "風屬性" },
+  { name: "羅剎", star: 5, life: "豐饒", element: "虛數屬性" },
+  { name: "銀狼", star: 5, life: "虛無", element: "量子屬性" },
+  { name: "景元", star: 5, life: "智識", element: "雷屬性" },
+  { name: "希兒", star: 5, life: "巡獵", element: "量子屬性" },
+  { name: "白露", star: 5, life: "豐饒", element: "雷屬性" },
+  { name: "彥卿", star: 5, life: "巡獵", element: "冰屬性" },
+  { name: "克拉拉", star: 5, life: "毀滅", element: "物理屬性" },
+  { name: "傑帕德", star: 5, life: "存護", element: "冰屬性" },
+  { name: "布洛妮婭", star: 5, life: "同諧", element: "風屬性" },
+  { name: "瓦爾特", star: 5, life: "虛無", element: "虛數屬性" },
+  { name: "姬子", star: 5, life: "智識", element: "火屬性" },
+  { name: "開拓者-存護", star: 5, life: "存護", element: "火屬性" },
+  { name: "開拓者-毀滅", star: 5, life: "毀滅", element: "物理屬性" },
+
+  { name: "貊澤", star: 4, life: "巡獵", element: "雷屬性" },
+  { name: "三月七", star: 4, life: "巡獵", element: "虛數屬性" },
+  { name: "加拉赫", star: 4, life: "豐饒", element: "火屬性" },
+  { name: "米沙", star: 4, life: "毀滅", element: "冰屬性" },
+  { name: "雪衣", star: 4, life: "毀滅", element: "量子屬性" },
+  { name: "寒鴉", star: 4, life: "同諧", element: "物理屬性" },
+  { name: "桂乃芬", star: 4, life: "虛無", element: "火屬性" },
+  { name: "玲可", star: 4, life: "豐饒", element: "量子屬性" },
+  { name: "盧卡", star: 4, life: "虛無", element: "物理屬性" },
+  { name: "馭空", star: 4, life: "同諧", element: "虛數屬性" },
+  { name: "素裳", star: 4, life: "巡獵", element: "物理屬性" },
+  { name: "停雲", star: 4, life: "同諧", element: "雷屬性" },
+  { name: "青雀", star: 4, life: "智識", element: "量子屬性" },
+  { name: "虎克", star: 4, life: "毀滅", element: "火屬性" },
+  { name: "桑博", star: 4, life: "虛無", element: "風屬性" },
+  { name: "佩拉", star: 4, life: "虛無", element: "冰屬性" },
+  { name: "娜塔莎", star: 4, life: "豐饒", element: "物理屬性" },
+  { name: "希露瓦", star: 4, life: "智識", element: "雷屬性" },
+  { name: "黑塔", star: 4, life: "智識", element: "冰屬性" },
+  { name: "艾絲妲", star: 4, life: "同諧", element: "火屬性" },
+  { name: "阿蘭", star: 4, life: "毀滅", element: "雷屬性" },
+  { name: "丹恆", star: 4, life: "巡獵", element: "風屬性" },
+  { name: "三月七", star: 4, life: "存護", element: "冰屬性" }
+];
+
 
     const searchInput = document.getElementById("searchInput");
     const suggestions = document.getElementById("suggestions");
@@ -199,24 +277,16 @@
       return text.toLowerCase().replace(/[！-～]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0xFEE0));
     }
 
-    searchInput.addEventListener("keydown", e => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        searchCharacter();
-        suggestions.innerHTML = "";
-      }
-    });
-
     function showSuggestions() {
       const input = normalizeText(searchInput.value.trim());
       suggestions.innerHTML = "";
       noResult.style.display = "none";
       if (!input) return;
-      characters.filter(name => normalizeText(name).includes(input)).forEach(name => {
+      characters.filter(character => normalizeText(character.name).includes(input)).forEach(character => {
         const div = document.createElement("div");
-        div.textContent = name;
+        div.textContent = character.name;
         div.onclick = () => {
-          searchInput.value = name;
+          searchInput.value = character.name;
           suggestions.innerHTML = "";
           searchCharacter();
         };
@@ -240,32 +310,39 @@
     }
 
     function loadStars(star) {
-      const url = star === '5' ? 'character-grid.html' : 'character-grid-4star.html';
-      fetch(url)
-        .then(response => response.text())
-        .then(html => { document.getElementById('characterContainer').innerHTML = html; })
-        .catch(err => {
-          document.getElementById('characterContainer').innerHTML = "<p style='color:white;'>角色載入失敗，請稍後再試。</p>";
-          console.error('載入角色卡失敗:', err);
-        });
+      const filtered = characters.filter(character => character.star === parseInt(star));
+      displayCharacters(filtered);
     }
 
-    loadStars('5');
+    function loadByElement(element) {
+      const filtered = characters.filter(character => character.element === element);
+      displayCharacters(filtered);
+    }
 
-    document.addEventListener("click", e => {
-      if (!searchInput.contains(e.target)) {
-        suggestions.innerHTML = "";
-      }
-    });
-
-    window.addEventListener("scroll", () => {
-      const btn = document.getElementById("backToTop");
-      btn.style.display = document.documentElement.scrollTop > 300 ? "block" : "none";
-    });
+    function displayCharacters(filtered) {
+      const container = document.getElementById("characterContainer");
+      container.innerHTML = "";
+      filtered.forEach(character => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.innerHTML = `
+          <div class="name">${character.name}</div>
+          <div class="role">${character.role} - ${character.element}</div>
+          <div class="version">版本: ${character.star}⭐</div>
+        `;
+        container.appendChild(card);
+      });
+    }
 
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    window.addEventListener('scroll', () => {
+      document.getElementById("backToTop").style.display = window.scrollY > 300 ? 'block' : 'none';
+    });
+
+    loadStars(5); // 初次載入5⭐角色
   </script>
 </body>
 </html>
