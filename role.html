@@ -183,9 +183,21 @@
   <button onclick="scrollToTop()" id="backToTop" title="回到頂部">↑</button>
 
   <script>
-    const characters = [...]; // 與前述相同角色陣列
-    const fiveStarCharacters = [...];
-    const fourStarCharacters = [...];
+    // 五星角色名單
+    const fiveStarCharacters = [
+      "白厄", "Archer", "Saber", "賽飛兒", "風堇", "那刻夏", "遐蝶", "萬敵", "緹寶", "阿格萊雅", 
+      "大黑塔", "開拓者-記憶", "望歸人", "星期日", "亂破", "靈砂", "飛霄", "椒丘", "雲璃", "翡翠", 
+      "流螢", "波提歐", "知更鳥", "開拓者-同諧", "砂金", "黃泉", "花火", "黑天鵝", "真理醫生", "阮梅", 
+      "銀枝", "藿藿", "托帕&帳帳", "鏡流", "符玄", "丹恆•飲月", "卡芙卡", "刃", "羅剎", "銀狼", "景元", 
+      "希兒", "白露", "彥卿", "克拉拉", "傑帕德", "布洛妮婭", "瓦爾特", "姬子", "開拓者-存護", "開拓者-毀滅"
+    ];
+
+    // 四星角色名單
+    const fourStarCharacters = [
+      "貊澤", "三月七•巡獵", "加拉赫", "米沙", "雪衣", "寒鴉", "桂乃芬", "玲可", "盧卡", "馭空",
+      "素裳", "停雲", "青雀", "虎克", "桑博", "佩拉", "娜塔莎", "希露瓦", "黑塔", "艾絲妲", "阿蘭",
+      "丹恆", "三月七"
+    ];
 
     const searchInput = document.getElementById("searchInput");
     const suggestions = document.getElementById("suggestions");
@@ -208,7 +220,8 @@
       suggestions.innerHTML = "";
       noResult.style.display = "none";
       if (!input) return;
-      characters.filter(name => normalizeText(name).includes(input)).forEach(name => {
+      const allCharacters = fiveStarCharacters.concat(fourStarCharacters);
+      allCharacters.filter(name => normalizeText(name).includes(input)).forEach(name => {
         const div = document.createElement("div");
         div.textContent = name;
         div.onclick = () => {
@@ -222,9 +235,21 @@
 
     function searchCharacter() {
       const term = normalizeText(searchInput.value.trim());
-      let found = false;
+      if (!term) return;
 
-      function doSearch() {
+      // 判斷角色所在星級，若目前顯示不符則切換
+      if (fiveStarCharacters.some(name => normalizeText(name) === term)) {
+        if (currentStar !== '5') loadStars('5');
+      } else if (fourStarCharacters.some(name => normalizeText(name) === term)) {
+        if (currentStar !== '4') loadStars('4');
+      } else {
+        noResult.style.display = "block";
+        return;
+      }
+
+      // 角色載入後會稍作延遲，等候 DOM 更新後進行搜尋與標示
+      setTimeout(() => {
+        let found = false;
         document.querySelectorAll('.card').forEach(card => {
           const name = normalizeText(card.querySelector('.name').textContent);
           if (name.includes(term)) {
@@ -235,27 +260,20 @@
           }
         });
         noResult.style.display = found ? 'none' : 'block';
-      }
-
-      doSearch();
-
-      if (!found) {
-        const raw = searchInput.value.trim();
-        if (fourStarCharacters.includes(raw)) {
-          loadStars('4');
-          setTimeout(() => { doSearch(); }, 500);
-        } else if (fiveStarCharacters.includes(raw)) {
-          loadStars('5');
-          setTimeout(() => { doSearch(); }, 500);
-        }
-      }
+      }, 300);
     }
 
+    let currentStar = '5';
+
     function loadStars(star) {
+      currentStar = star;
       const url = star === '5' ? 'character-grid.html' : 'character-grid-4star.html';
       fetch(url)
         .then(response => response.text())
-        .then(html => { document.getElementById('characterContainer').innerHTML = html; })
+        .then(html => {
+          document.getElementById('characterContainer').innerHTML = html;
+          noResult.style.display = "none";
+        })
         .catch(err => {
           document.getElementById('characterContainer').innerHTML = "<p style='color:white;'>角色載入失敗，請稍後再試。</p>";
           console.error('載入角色卡失敗:', err);
